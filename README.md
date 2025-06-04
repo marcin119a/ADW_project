@@ -28,6 +28,11 @@ To train the model, run:
 python cellslighter/train.py
 ```
 
+##### Optional 
+```bash
+python cellslighter/train.py --resume_checkpoint checkpoints/cellslighter-123456-epoch=10-loss_val=0.45.ckpt
+```
+
 #### Training Data
 
 * Unzip and place your training data in the following directory:
