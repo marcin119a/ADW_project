@@ -1,5 +1,3 @@
----
-
 ````markdown
 # 🧬 CellSlighter 0.7
 
