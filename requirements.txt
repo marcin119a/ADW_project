@@ -1,0 +1,16 @@
+anndata
+DelayedArray
+lightning
+pyometiff
+scanpy
+scikit-learn
+scipy
+torch
+torchaudio
+torchinfo
+torchmetrics
+torchvision
+wandb
+opencv-python
+icecream
+timm
