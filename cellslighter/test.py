@@ -34,7 +34,7 @@ def main():
     ])
     crops = cell_crop_loader.prepare_cell_crops()
     dataset = CellDataset(crops, val_transform)
-    datamodule = CellDataModule(dataset, batch_size=1024)
+    datamodule = CellDataModule(dataset, batch_size=4)
     trainer = L.Trainer(
         devices=1,
         accelerator='gpu',

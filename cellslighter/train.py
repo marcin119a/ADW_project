@@ -57,7 +57,7 @@ def main():
     # Create a subset of the dataset using the sampler
     subset_indices = list(iter(sampler))
     subset_dataset = create_subset_dataset(dataset, subset_indices)
-    datamodule = CellDataModule(subset_dataset, batch_size=512, num_workers=0, pin_memory=True,
+    datamodule = CellDataModule(subset_dataset, batch_size=4, num_workers=0, pin_memory=True,
                                 persistent_workers=False)
     del crops
     del dataset
