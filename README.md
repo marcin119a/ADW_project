@@ -1,5 +1,3 @@
-Sure! Here's the English version of the `README.md`, polished and developer-friendly:
-
 ---
 
 ````markdown
@@ -111,5 +109,5 @@ To validate using pretrained weights:
 python train.py
 ```
 
-Let me know if you want a badge header (`build passing`, `license`, etc.), GitHub Actions CI integration, or an example output image/plot in the README.
-```
+Link for data: 
+* https://drive.google.com/file/d/1-0YOHE1VoTRWqfBJLHQorGcHmkhCYvqW/view?pli=1
