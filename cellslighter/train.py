@@ -16,7 +16,7 @@ from data.celldata import create_subset_dataset
 from typing import List
 import numpy as np
 from icecream import ic
-
+import argparse
 
 def create_weighted_random_sampler(labels: List[int], num_samples_per_class: int,
                                    num_classes: int) -> WeightedRandomSampler:
@@ -28,6 +28,11 @@ def create_weighted_random_sampler(labels: List[int], num_samples_per_class: int
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--resume_checkpoint', type=str, default=None,
+                        help='Path to checkpoint to resume training from')
+    args = parser.parse_args()
+
     wandb_logger = pl.loggers.WandbLogger(
         project='cellsighter2137'
     )
@@ -61,7 +66,7 @@ def main():
                                 persistent_workers=False)
     del crops
     del dataset
-    
+
     rng = torch.Generator()
     unique_id = torch.randint(0, 1000000, (1,), generator=rng).item()
     ckpt_filename = f'cellslighter-{unique_id}-{{epoch:02d}}-{{loss_val:.2f}}'
@@ -81,7 +86,12 @@ def main():
         logger=wandb_logger,
         callbacks=[checkpoint_callback]
     )
-    model = CellSlighter(15, backbone='vit', img_size=120)
+    if args.resume_checkpoint:
+        print(f"Resuming training from checkpoint: {args.resume_checkpoint}")
+        model = CellSlighter.load_from_checkpoint(args.resume_checkpoint)
+    else:
+        model = CellSlighter(15, backbone='vit', img_size=120)
+
     trainer.fit(model, datamodule)
     wandb.finish()
     checkpoint_filenames = [os.path.basename(path) for path in checkpoint_callback.best_k_models.keys()]
