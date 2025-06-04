@@ -26,7 +26,7 @@ python cellslighter/train.py
 
 ##### Optional 
 ```bash
-python cellslighter/train.py --resume_checkpoint checkpoints/cellslighter-123456-epoch=10-loss_val=0.45.ckpt
+python cellslighter/train.py --resume_checkpoint checkpoints/epoch=14-step=2760.ckpt
 ```
 
 #### Training Data
