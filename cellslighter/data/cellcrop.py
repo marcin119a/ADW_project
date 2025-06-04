@@ -10,15 +10,17 @@ class CellCrop:
         self.mask = mask
         self.label = label
         self.slices = slices
-    
+
     def sample(self):
-        cropped_image = self.img[:, self.slices]
-        mask = self.mask[self.slices]
-        
+        h_slice, w_slice = self.slices
+
+        cropped_image = self.img[:, h_slice, w_slice]
+        cropped_mask = self.mask[h_slice, w_slice]
+
         return {
             'cell_id': self.cell_id,
             'image': cropped_image,
-            'mask': (mask == self.cell_id).astype(np.float16),
-            'all_masks': (mask > 0).astype(np.float16),
+            'mask': (cropped_mask == self.cell_id).astype(np.float16),
+            'all_masks': (cropped_mask > 0).astype(np.float16),
             'label': self.label
         }
