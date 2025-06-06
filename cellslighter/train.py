@@ -55,7 +55,7 @@ def main():
     dataset = CellDataset(crops, train_transform)
     labels = [crop.label for crop in crops]
     num_classes = 15
-    
+
     num_samples_per_class = min(torch.bincount(torch.tensor(labels), minlength=num_classes - 1)).item()
     # ic(num_samples_per_class)
     sampler = create_weighted_random_sampler(labels, num_samples_per_class, num_classes)
@@ -80,17 +80,17 @@ def main():
     )
     trainer = L.Trainer(
         max_epochs=50,
-        devices=1,
-        accelerator='auto',
+        devices=[1],
+        accelerator="gpu",
         precision="16",
         logger=wandb_logger,
-        callbacks=[checkpoint_callback]
+        callbacks=[checkpoint_callback],
     )
     if args.resume_checkpoint:
         print(f"Resuming training from checkpoint: {args.resume_checkpoint}")
         model = CellSlighter.load_from_checkpoint(args.resume_checkpoint)
     else:
-        model = CellSlighter(15, backbone='vit', img_size=120)
+        model = CellSlighter(15, img_size=120)
 
     trainer.fit(model, datamodule)
     wandb.finish()
@@ -98,7 +98,7 @@ def main():
     checkpoint_file = 'checkpoint_paths.txt'
     with open(checkpoint_file, 'w') as file:
         file.write('\n'.join(checkpoint_filenames))
-    
+
     print(f'Checkpoint filenames saved to {checkpoint_file}')
 
 
